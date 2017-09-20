@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Clue Online!</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--css-->
+    <link rel="stylesheet" type="text/css" href="css/chat.css">
+    <!-- JQUERY -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+		<!-- Notice the URL, this is handled by socket.io on the server automatically, via express -->
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect('/', {
+		    reconnection: true,
+		    reconnectionDelay: 5000,
+		    reconnectionDelayMax : 5000,
+		    reconnectionAttempts: 10
+			});
+    </script>
+
+		<script type="text/javascript" src="/js/onload.js"> </script>
+		<script type="text/javascript" src="/js/client.js"> </script>
+	</head>
+
+	<body>
+    <div class="userbox" id="userbox">
+      <div id='errormsg' class="hidden errormsg"></div>
+      <input type="text" placeholder="Enter a username to connect..." id="usernamebox"></input>
+      <button id="submit" class="submit">Submit</button>
+    </div>
+		<div id="wrapper" class="hidden">
+      <div id="canvasWrap" class="hidden">
+          <canvas id="canvas">Canvas is not supported on your browser.</canvas>
+      </div>
+			<div class="hidden" id="chatwrap">
+				<div id="chatpane" class="white"> </div>
+	      <textarea placeholder="Enter message..." id="sendbox"></textarea>
+	    </div>
+		</div>
+  <!--  <div class="hidden" id="chatwrap">
+      <div id="chatpane"> </div>
+      <textarea placeholder="Enter message..." id="sendbox"></textarea>
+    </div>
+    <div id="canvaswrap">
+      <canvas id="canvas"> </canvas>
+    </div>-->
+	</body>
+</html>
