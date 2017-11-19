@@ -11,7 +11,7 @@ Notes for fixes/improvements:
 
 Notes for upgrades:
 
-1.  Login with username and password feature
+1.  Login with username and password feature (Mongo?)
 2.  Allow re-connect with username (game state required)
 3.  Allow multiple games at once (array of game states?)
 4.  Add restart button
