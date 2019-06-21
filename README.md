@@ -15,3 +15,5 @@ Notes for upgrades:
 2.  Allow re-connect with username (game state required)
 3.  Allow multiple games at once (array of game states?)
 4.  Add restart button
+5.  JS Minifier
+6.  Separate JS into classes/clean up code
