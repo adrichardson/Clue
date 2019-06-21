@@ -17,4 +17,3 @@ Notes for upgrades:
 4.  Add restart button
 5.  JS Minifier
 6.  Separate JS into classes/clean up code
-7.  Check alternative GameEngine existing libraries
