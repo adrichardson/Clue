@@ -1,9 +1,16 @@
 
 
-function Player (name){
-  this.name = name;
-}
+class Player {
+  constructor(name) {
+    this.name = name
+  }
 
-Player.prototype.setName = function(name) {
-    this.name = name;
-};
+  setName (newName) {
+    this.name = newName
+ }
+
+ getName(){
+   return this.name;
+ }
+
+}
