@@ -3,12 +3,19 @@ var update = true;
 var boardW, boardH, sqW, sqH, canvW, canvH;
 var leftpad = 15;
 var toppad = 15;
-var characters = [{name: "Ms. Scarlet", img: "msscarlet.png", grayscale: "msscarlet-grayscale.png", client: null, color: "#DC143C"},
-                  {name: "Col. Mustard", img: "colmustard.png", grayscale: "colmustard-grayscale.png", client: null, color: "#FFA500"},
-                  {name: "Mrs. White", img: "mrswhite.png", grayscale: "mrswhite-grayscale.png", client: null, color: "#DEB887"},
-                  {name: "Mr. Green", img: "mrgreen.png", grayscale: "mrgreen-grayscale.png", client: null, color: "#008000"},
-                  {name: "Mrs. Peacock", img: "mrspeacock.png", grayscale: "mrspeacock-grayscale.png", client: null, color: "#0000FF"},
-                  {name: "Prof. Plum", img: "profplum.png", grayscale: "profplum-grayscale.png", client: null, color: "#800080"}];
+var characters = [new Character("Ms. Scarlet", "msscarlet.png", "msscarlet-grayscale.png", null, "#DC143C"),
+    new Character("Col. Mustard", "colmustard.png", "colmustard-grayscale.png", null, "#FFA500"),
+    new Character("Mrs. White", "mrswhite.png", "mrswhite-grayscale.png", null, "#DEB887"),
+    new Character("Mr. Green", "mrgreen.png", "mrgreen-grayscale.png", null, "#008000"),
+    new Character("Mrs. Peacock", "mrspeacock.png", "mrspeacock-grayscale.png", null, "#0000FF"),
+    new Character("Prof. Plum", "profplum.png", "profplum-grayscale.png", null, "#800080")]
+
+    //[{ name: "Ms. Scarlet", img: "msscarlet.png", grayscale: "msscarlet-grayscale.png", client: null, color: "#DC143C" },
+    //              {name: "Col. Mustard", img: "colmustard.png", grayscale: "colmustard-grayscale.png", client: null, color: "#FFA500"},
+    //              {name: "Mrs. White", img: "mrswhite.png", grayscale: "mrswhite-grayscale.png", client: null, color: "#DEB887"},
+    //              {name: "Mr. Green", img: "mrgreen.png", grayscale: "mrgreen-grayscale.png", client: null, color: "#008000"},
+    //              {name: "Mrs. Peacock", img: "mrspeacock.png", grayscale: "mrspeacock-grayscale.png", client: null, color: "#0000FF"},
+    //              {name: "Prof. Plum", img: "profplum.png", grayscale: "profplum-grayscale.png", client: null, color: "#800080"}];
 
 var people = [{name: "Ms. Scarlet", img: "img/people/msscarlet.png", grayscale: "img/people/msscarlet-grayscale.png", type: "Person"},
               {name: "Col. Mustard", img: "img/people/colmustard.png", grayscale: "img/people/colmustard-grayscale.png", type: "Person"},
@@ -89,11 +96,12 @@ $( document ).ready(function() {
       if(key.which==13) { //enter
         var msg =  $("#sendbox").val();
         var user = socket.username;
-        sendMessage(user, msg, selectedCharacter.color, selectedCharacter.name);
+        Player.prototype.sendMessage(user, msg, selectedCharacter.color, selectedCharacter.name);
       }
     });
-    $('#submit').click(function(){
-      enterusername();
+    $('#submit').click(function () {
+        UserInput.prototype.enterusername();
+      //enterusername();
     });
     $('#usernamebox').keydown(function(key) {
       if(key.which==13) { //enter
@@ -147,22 +155,25 @@ function sendInfoMessage(msg){
   socket.emit('infomsg', {username: socket.username, msg: msg, color: selectedCharacter.color, character: selectedCharacter.name} );
 }
 
-function enterusername(){
-    if($('#usernamebox').val()!== ''){
-      var usern = $('#usernamebox').val();
-      socket.emit('setuser', {username: usern});
-      socket.emit('newuserconnect', {username: usern});
-      resizeCanvas();
-      $('#chatwrap').removeClass('hidden');
-      $('#canvas').addClass('white');
-      $('#chatwrap').addClass('white');
-      $('#wrapper').removeClass('hidden');
-      $('#userbox').addClass('hidden');
-      init();
-    } else {
-      $('#errormsg').html('Please enter a valid user name!');
-      $('#errormsg').removeClass('hidden');
-    }
+function enterusername() {
+
+    UserInput.prototype.enterusername();
+
+    //if($('#usernamebox').val()!== ''){
+    //  var usern = $('#usernamebox').val();
+    //  socket.emit('setuser', {username: usern});
+    //  socket.emit('newuserconnect', {username: usern});
+    //  resizeCanvas();
+    //  $('#chatwrap').removeClass('hidden');
+    //  $('#canvas').addClass('white');
+    //  $('#chatwrap').addClass('white');
+    //  $('#wrapper').removeClass('hidden');
+    //  $('#userbox').addClass('hidden');
+    //  init();
+    //} else {
+    //  $('#errormsg').html('Please enter a valid user name!');
+    //  $('#errormsg').removeClass('hidden');
+    //}
 }
 
 function shadeColor(color, percent) {
@@ -1558,7 +1569,8 @@ function createMenu(){
   stage.addChild(text);
   //characters
   for(var i=0; i<characters.length; i++){
-      createChooseOption(characters[i].name, "img/people/" + characters[i].img, "img/people/" + characters[i].grayscale, i, characters[i]);
+      createChooseOption(characters[i].name, "img/people/" + characters[i].img,
+          "img/people/" + characters[i].img_grayscale, i, characters[i]);
   }
 }
 

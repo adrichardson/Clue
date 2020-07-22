@@ -1,4 +1,5 @@
 /*jshint esversion: 6 */
+var deck = require('././js/GameJS/Cards/Deck');
 var http = require('http');
 var express = require('express');
 var app = express();
@@ -8,6 +9,23 @@ var io = require('socket.io');
 //socket.io
 var sio = io.listen(server);
 var UUID = require('node-uuid');
+
+app.use(express.static(__dirname + '/')); //for external stylesheet
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+
+app.use(function (req, res, next) {
+    res.status(404).sendFile(__dirname + '/404.html');
+});
+
+server.listen(port, "0.0.0.0", (err) => {
+    if (err) {
+        return console.log('Something bad happened!', err);
+    }
+    console.log(`server is listening on ${port}`);
+});
 
 var connectedCount = 0;
 var connectedClients = [];
@@ -19,31 +37,31 @@ var characters = [{name: "Ms. Scarlet", img: "msscarlet.png", grayscale: "msscar
                   {name: "Mrs. Peacock", img: "mrspeacock.png", grayscale: "mrspeacock-grayscale.png", client: null, color: "#0000FF"},
                   {name: "Prof. Plum", img: "profplum.png", grayscale: "profplum-grayscale.png", client: null, color: "#800080"}];
 
-var people = [{name: "Ms. Scarlet", img: "img/people/msscarlet.png", grayscale: "img/people/msscarlet-grayscale.png", type: "Person"},
-              {name: "Col. Mustard", img: "img/people/colmustard.png", grayscale: "img/people/colmustard-grayscale.png", type: "Person"},
-              {name: "Mrs. White", img: "img/people/mrswhite.png", grayscale: "img/people/mrswhite-grayscale.png", type: "Person"},
-              {name: "Mr. Green", img: "img/people/mrgreen.png", grayscale: "img/people/mrgreen-grayscale.png", type: "Person"},
-              {name: "Mrs. Peacock", img: "img/people/mrspeacock.png", grayscale: "img/people/mrspeacock-grayscale.png", type: "Person"},
-              {name: "Prof. Plum", img: "img/people/profplum.png", grayscale: "img/people/profplum-grayscale.png", type: "Person"}];
+//var people = [{name: "Ms. Scarlet", img: "img/people/msscarlet.png", grayscale: "img/people/msscarlet-grayscale.png", type: "Person"},
+//              {name: "Col. Mustard", img: "img/people/colmustard.png", grayscale: "img/people/colmustard-grayscale.png", type: "Person"},
+//              {name: "Mrs. White", img: "img/people/mrswhite.png", grayscale: "img/people/mrswhite-grayscale.png", type: "Person"},
+//              {name: "Mr. Green", img: "img/people/mrgreen.png", grayscale: "img/people/mrgreen-grayscale.png", type: "Person"},
+//              {name: "Mrs. Peacock", img: "img/people/mrspeacock.png", grayscale: "img/people/mrspeacock-grayscale.png", type: "Person"},
+//              {name: "Prof. Plum", img: "img/people/profplum.png", grayscale: "img/people/profplum-grayscale.png", type: "Person"}];
 
-var weapons = [{name: "Candlestick", img: "img/weapons/candlestick.png", grayscale: "img/weapons/candlestick-grayscale.png", type: "Weapon"},
-               {name: "Knife", img: "img/weapons/knife.png", grayscale: "img/weapons/knife-grayscale.png", type: "Weapon"},
-               {name: "Lead Pipe", img: "img/weapons/leadpipe.png", grayscale: "img/weapons/leadpipe-grayscale.png", type: "Weapon"},
-               {name: "Revolver", img: "img/weapons/revolver.png", grayscale: "img/weapons/revolver-grayscale.png", type: "Weapon"},
-               {name: "Rope", img: "img/weapons/rope.png", grayscale: "img/weapons/rope-grayscale.png", type: "Weapon"},
-               {name: "Wrench", img: "img/weapons/wrench.png", grayscale: "img/weapons/wrench-grayscale.png", type: "Weapon"}];
+//var weapons = [{name: "Candlestick", img: "img/weapons/candlestick.png", grayscale: "img/weapons/candlestick-grayscale.png", type: "Weapon"},
+//               {name: "Knife", img: "img/weapons/knife.png", grayscale: "img/weapons/knife-grayscale.png", type: "Weapon"},
+//               {name: "Lead Pipe", img: "img/weapons/leadpipe.png", grayscale: "img/weapons/leadpipe-grayscale.png", type: "Weapon"},
+//               {name: "Revolver", img: "img/weapons/revolver.png", grayscale: "img/weapons/revolver-grayscale.png", type: "Weapon"},
+//               {name: "Rope", img: "img/weapons/rope.png", grayscale: "img/weapons/rope-grayscale.png", type: "Weapon"},
+//               {name: "Wrench", img: "img/weapons/wrench.png", grayscale: "img/weapons/wrench-grayscale.png", type: "Weapon"}];
 
-var rooms = [{name: "Ballroom", img: "img/rooms/ballroom.png", grayscale: "img/rooms/ballroom-grayscale.png", type: "Room"},
-             {name: "Billiard Room", img: "img/rooms/billiardroom.png", grayscale: "img/rooms/billiardroom-grayscale.png", type: "Room"},
-             {name: "Conservatory", img: "img/rooms/conservatory.png", grayscale: "img/rooms/conservatory-grayscale.png", type: "Room"},
-             {name: "Dining Room", img: "img/rooms/diningroom.png", grayscale: "img/rooms/diningroom-grayscale.png", type: "Room"},
-             {name: "Hall", img: "img/rooms/hall.png", grayscale: "img/rooms/hall-grayscale.png", type: "Room"},
-             {name: "Kitchen", img: "img/rooms/kitchen.png", grayscale: "img/rooms/kitchen-grayscale.png", type: "Room"},
-             {name: "Library", img: "img/rooms/library.png", grayscale: "img/rooms/library-grayscale.png", type: "Room"},
-             {name: "Lounge", img: "img/rooms/lounge.png", grayscale: "img/rooms/lounge-grayscale.png", type: "Room"},
-             {name: "Study", img: "img/rooms/study.png", grayscale: "img/rooms/study-grayscale.png", type: "Room"}];
+//var rooms = [{name: "Ballroom", img: "img/rooms/ballroom.png", grayscale: "img/rooms/ballroom-grayscale.png", type: "Room"},
+//             {name: "Billiard Room", img: "img/rooms/billiardroom.png", grayscale: "img/rooms/billiardroom-grayscale.png", type: "Room"},
+//             {name: "Conservatory", img: "img/rooms/conservatory.png", grayscale: "img/rooms/conservatory-grayscale.png", type: "Room"},
+//             {name: "Dining Room", img: "img/rooms/diningroom.png", grayscale: "img/rooms/diningroom-grayscale.png", type: "Room"},
+//             {name: "Hall", img: "img/rooms/hall.png", grayscale: "img/rooms/hall-grayscale.png", type: "Room"},
+//             {name: "Kitchen", img: "img/rooms/kitchen.png", grayscale: "img/rooms/kitchen-grayscale.png", type: "Room"},
+//             {name: "Library", img: "img/rooms/library.png", grayscale: "img/rooms/library-grayscale.png", type: "Room"},
+//             {name: "Lounge", img: "img/rooms/lounge.png", grayscale: "img/rooms/lounge-grayscale.png", type: "Room"},
+//             {name: "Study", img: "img/rooms/study.png", grayscale: "img/rooms/study-grayscale.png", type: "Room"}];
 
-var deck = people.concat(weapons).concat(rooms);
+//var deck = new deck();//people.concat(weapons).concat(rooms);
 var hasPerson = false;
 var hasWeapon = false;
 var hasRoom = false;
@@ -112,22 +130,6 @@ function createMurder(deck){
   //console.log(solution);
 }
 
-app.use(express.static(__dirname + '/')); //for external stylesheet
-
-app.get('/', (req, res) => {
-  res.sendFile( __dirname + '/index.html' );
-});
-
-app.use(function (req, res, next) {
-  res.status(404).sendFile( __dirname + '/404.html' );
-});
-
-server.listen(port, "0.0.0.0", (err) => {
-  if (err) {
-    return console.log('Something bad happened!', err);
-  }
-  console.log(`server is listening on ${port}`);
-});
 
 sio.sockets.on('connection', function (client) {
     /*
@@ -183,10 +185,12 @@ sio.sockets.on('connection', function (client) {
     client.on('startGame', function(data){
       votestart++;
       client.emit('callinfomsg', ' has voted to start the game.');
-      if(votestart == players.length){
-        shuffle(deck);
-        createMurder(deck);
-        dealHands(deck);
+        if (votestart == players.length) {
+            deck = new deck();
+            deck.prototype.Shuffle();
+        //shuffle(deck);
+        createMurder(deck.cards);
+        dealHands(deck.cards);
         sio.sockets.emit('startGame', data);
         players[0].client.emit('newTurn', data);
         turn++;
