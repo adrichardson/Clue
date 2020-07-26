@@ -1,11 +1,9 @@
-module.exports = class Card {
+class Card extends createjs.Bitmap {
     constructor(name, img, img_grayscale, type) {
+        super(img);
         this.name = name;
         this.img = img;
         this.img_grayscale = img_grayscale;
         this.type = type;
     }
 }
-
-    //template
-//{name: "Ms. Scarlet", img: "img/people/msscarlet.png", grayscale: "img/people/msscarlet-grayscale.png", type: "Person"}

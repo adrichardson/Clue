@@ -2,6 +2,7 @@ dynamicallyLoadScript("js/GameJS/Cards/Card.js");
 dynamicallyLoadScript("js/GameJS/Cards/PersonCard.js");
 dynamicallyLoadScript("js/GameJS/Cards/RoomCard.js");
 dynamicallyLoadScript("js/GameJS/Cards/WeaponCard.js");
+dynamicallyLoadScript("js/GameJS/Cards/TitleCard.js");
 dynamicallyLoadScript("js/GameJS/Cards/Deck.js");
 dynamicallyLoadScript("js/GameJS/Character.js");
 dynamicallyLoadScript("js/GameJS/Board.js");

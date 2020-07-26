@@ -121,7 +121,7 @@ socket.on('characterSelected', function(data) {
   if(stage==null) return;
   var selectedCard = stage.getChildByName(data.name);
   var box = stage.getChildByName('confirmBox');
-  selectedCard.image = selectedCard.grayscale;
+  selectedCard.image = selectedCard.img_grayscale;
   selectedCard.canSelect = false;
   selectedCard.cursor = 'no-drop';
   createSelectionText('('+ data.username + ')', selectedCard, data.color);

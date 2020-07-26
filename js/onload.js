@@ -8,7 +8,7 @@ var characters = [new Character("Ms. Scarlet", "msscarlet.png", "msscarlet-grays
     new Character("Mrs. White", "mrswhite.png", "mrswhite-grayscale.png", null, "#DEB887"),
     new Character("Mr. Green", "mrgreen.png", "mrgreen-grayscale.png", null, "#008000"),
     new Character("Mrs. Peacock", "mrspeacock.png", "mrspeacock-grayscale.png", null, "#0000FF"),
-    new Character("Prof. Plum", "profplum.png", "profplum-grayscale.png", null, "#800080")]
+    new Character("Prof. Plum", "profplum.png", "profplum-grayscale.png", null, "#800080")];
 
     //[{ name: "Ms. Scarlet", img: "msscarlet.png", grayscale: "msscarlet-grayscale.png", client: null, color: "#DC143C" },
     //              {name: "Col. Mustard", img: "colmustard.png", grayscale: "colmustard-grayscale.png", client: null, color: "#FFA500"},
@@ -158,22 +158,7 @@ function sendInfoMessage(msg){
 function enterusername() {
 
     UserInput.prototype.enterusername();
-
-    //if($('#usernamebox').val()!== ''){
-    //  var usern = $('#usernamebox').val();
-    //  socket.emit('setuser', {username: usern});
-    //  socket.emit('newuserconnect', {username: usern});
-    //  resizeCanvas();
-    //  $('#chatwrap').removeClass('hidden');
-    //  $('#canvas').addClass('white');
-    //  $('#chatwrap').addClass('white');
-    //  $('#wrapper').removeClass('hidden');
-    //  $('#userbox').addClass('hidden');
-    //  init();
-    //} else {
-    //  $('#errormsg').html('Please enter a valid user name!');
-    //  $('#errormsg').removeClass('hidden');
-    //}
+    
 }
 
 function shadeColor(color, percent) {
@@ -1484,7 +1469,8 @@ function showConfirm(card, box){
         socket.emit('characterSelected', {'name': newbox.selection.name, 'username': username, 'color': color});
         stage.removeChild(stage.getChildByName('confirmBox'));
         createSelectionText('(You)', newbox.selection, color);
-        disableCard(evt.target.selection);
+        newbox.selection.disable();
+        //disableCard(evt.target.selection);
         update=true;
 
       });
@@ -1502,44 +1488,25 @@ function showConfirm(card, box){
 
 function createChooseOption(name, image, grayscale, pos, character){
   var disabled = character.client!=null;
-  var img2 = new Image();
-  img2.src = grayscale;
-  var img = new Image();
-  img.onload = function(){
-    var card = new createjs.Bitmap(img);
-    var startbutton = stage.getChildByName('StartButton');
-    card.scaleX = (canvas.width/6 - leftpad)/img.width;
-    card.scaleY = (canvas.height*0.4 - toppad)/img.height; // - (startbutton.y - (startbutton.image.height * startbutton.scaleY))
-    card.cursor = "pointer";
-    card.x = leftpad + pos*(img.width*card.scaleX + 10);
-    card.y = toppad + 50;
-    card.name = name;
-    card.type = "Card";
-    card.grayscale = img2;
-    card.canSelect = !disabled;
-    if(disabled){
-      card.image = card.grayscale;
-      card.canSelect = false;
-      card.cursor = 'no-drop';
-      createSelectionText('('+ character.client.username +')', card, character.color);
-    }
-    card.on("mousedown", function(evt){
-      if(!card.canSelect || selectedCharacter.name!='Spectator')
-          return;
-      if(stage.getChildByName('confirmBox')!=null){
-        showConfirm(evt.target, stage.getChildByName('confirmBox'));
-      } else {
-        showConfirm(evt.target, null);
-      }
-    });
-    stage.addChild(card);
-    update = true;
-  };
-  img.src = image;
+  //var img2 = new Image();
+  //img2.src = grayscale;
+  var img = character.img;//new Image();
+  var img2 = character.img_grayscale;
+  var scaleX = (canvas.width/6 - leftpad)/img.width;
+  var scaleY = (canvas.height*0.4 - toppad)/img.height; // - (startbutton.y - (startbutton.image.height * startbutton.scaleY))
+  var x = leftpad + pos*(img.width*scaleX + 10);
+  var y = toppad + 50;
+  var card = new TitleCard(name, x, y, scaleX, scaleY, img, img2, !disabled);//createjs.Bitmap(img);    
+  if(disabled){
+    card.disable();
+    createSelectionText('('+ character.client.username +')', card, character.color);
+  }
+  stage.addChild(card);
+  update = true;  
 }
 
 function updateCharacters(char){
-  characters=char;
+  //characters=char;
 }
 
 function createMenu(){
@@ -1568,10 +1535,12 @@ function createMenu(){
   text.y = toppad;
   stage.addChild(text);
   //characters
+  console.log(characters);
   for(var i=0; i<characters.length; i++){
       createChooseOption(characters[i].name, "img/people/" + characters[i].img,
           "img/people/" + characters[i].img_grayscale, i, characters[i]);
   }
+
 }
 
 function playMusic(event){

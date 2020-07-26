@@ -1,11 +1,8 @@
-var Card = require("./Card");
-
-module.exports = class WeaponCard extends Card {
+class WeaponCard extends Card {
     constructor(name, img, img_grayscale) {
-        super();
+        super(name, img, img_grayscale, "Weapon");
         this.name = name;
         this.img = img;
         this.img_grayscale = img_grayscale;
-        this.type = "Weapon";
     }
 }

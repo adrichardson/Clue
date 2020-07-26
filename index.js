@@ -30,7 +30,7 @@ server.listen(port, "0.0.0.0", (err) => {
 var connectedCount = 0;
 var connectedClients = [];
 
-var characters = [{name: "Ms. Scarlet", img: "msscarlet.png", grayscale: "msscarlet-grayscale.png", client: null, color: "#DC143C"},
+var Indexcharacters = [{name: "Ms. Scarlet", img: "msscarlet.png", grayscale: "msscarlet-grayscale.png", client: null, color: "#DC143C"},
                   {name: "Col. Mustard", img: "colmustard.png", grayscale: "colmustard-grayscale.png", client: null, color: "#FFA500"},
                   {name: "Mrs. White", img: "mrswhite.png", grayscale: "mrswhite-grayscale.png", client: null, color: "#DEB887"},
                   {name: "Mr. Green", img: "mrgreen.png", grayscale: "mrgreen-grayscale.png", client: null, color: "#008000"},
@@ -168,17 +168,17 @@ sio.sockets.on('connection', function (client) {
       }
     });
     client.on('characterSelected', function (data) {
-      for(var i = 0; i < characters.length; i ++){
-        if(characters[i].name == data.name){
+      for(var i = 0; i < Indexcharacters.length; i ++){
+        if(Indexcharacters[i].name == data.name){
           client.broadcast.emit('characterSelected', data);
-          client.emit('updateCharacter', {name: characters[i].name, color: characters[i].color});
-          players.push({'client': client, 'hand': [], 'character' : characters[i].name, 'color': characters[i].color});
-          if(characters[i].name == 'Ms. Scarlet' && players.length > 1){
+          client.emit('updateCharacter', {name: Indexcharacters[i].name, color: Indexcharacters[i].color});
+          players.push({'client': client, 'hand': [], 'character' : Indexcharacters[i].name, 'color': Indexcharacters[i].color});
+          if(Indexcharacters[i].name == 'Ms. Scarlet' && players.length > 1){
             var tmp = players[players.length-1];
             players[players.length-1] = players[0];
             players[0] = tmp;
           }
-          characters[i].client = {'name': data.name, 'username': data.username, 'color': data.color, position: players.length-1};
+          Indexcharacters[i].client = {'name': data.name, 'username': data.username, 'color': data.color, position: players.length-1};
         }
       }
     });
@@ -207,7 +207,7 @@ sio.sockets.on('connection', function (client) {
       client.emit('endTurn', null);
     });
     client.on('checkAvailableCharacters', function (data) {
-        client.emit('checkAvailableCharacters', JSON.stringify(characters));
+        client.emit('checkAvailableCharacters', JSON.stringify(Indexcharacters));
     });
     client.on('canvasMove', function (data) {
         client.broadcast.emit('canvasMove', data);

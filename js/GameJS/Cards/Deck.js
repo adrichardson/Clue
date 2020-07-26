@@ -1,8 +1,4 @@
-var PersonCard = require("./PersonCard");
-var WeaponCard = require("./WeaponCard");
-var RoomCard = require("./RoomCard");
-
-module.exports = class Deck {
+class Deck {
     constructor() {
         this.InitializeDeck();
     }
@@ -16,10 +12,6 @@ module.exports = class Deck {
             a[i - 1] = a[j];
             a[j] = x;
         }
-    }
-
-    get cards{
-        return this.cards;
     }
 
     InitializeDeck() {
