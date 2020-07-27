@@ -3,12 +3,12 @@ var update = true;
 var boardW, boardH, sqW, sqH, canvW, canvH;
 var leftpad = 15;
 var toppad = 15;
-var characters = [new Character("Ms. Scarlet", "msscarlet.png", "msscarlet-grayscale.png", null, "#DC143C"),
-    new Character("Col. Mustard", "colmustard.png", "colmustard-grayscale.png", null, "#FFA500"),
-    new Character("Mrs. White", "mrswhite.png", "mrswhite-grayscale.png", null, "#DEB887"),
-    new Character("Mr. Green", "mrgreen.png", "mrgreen-grayscale.png", null, "#008000"),
-    new Character("Mrs. Peacock", "mrspeacock.png", "mrspeacock-grayscale.png", null, "#0000FF"),
-    new Character("Prof. Plum", "profplum.png", "profplum-grayscale.png", null, "#800080")];
+var characters = [new Piece("Ms. Scarlet", "msscarlet.png", "msscarlet-grayscale.png", null, "#DC143C"),
+    new Piece("Col. Mustard", "colmustard.png", "colmustard-grayscale.png", null, "#FFA500"),
+    new Piece("Mrs. White", "mrswhite.png", "mrswhite-grayscale.png", null, "#DEB887"),
+    new Piece("Mr. Green", "mrgreen.png", "mrgreen-grayscale.png", null, "#008000"),
+    new Piece("Mrs. Peacock", "mrspeacock.png", "mrspeacock-grayscale.png", null, "#0000FF"),
+    new Piece("Prof. Plum", "profplum.png", "profplum-grayscale.png", null, "#800080")];
 
     //[{ name: "Ms. Scarlet", img: "msscarlet.png", grayscale: "msscarlet-grayscale.png", client: null, color: "#DC143C" },
     //              {name: "Col. Mustard", img: "colmustard.png", grayscale: "colmustard-grayscale.png", client: null, color: "#FFA500"},
@@ -100,7 +100,7 @@ $( document ).ready(function() {
       }
     });
     $('#submit').click(function () {
-        UserInput.prototype.enterusername();
+        UserInput.prototype.EnterUsername();
       //enterusername();
     });
     $('#usernamebox').keydown(function(key) {
@@ -157,7 +157,7 @@ function sendInfoMessage(msg){
 
 function enterusername() {
 
-    UserInput.prototype.enterusername();
+    UserInput.prototype.EnterUsername();
     
 }
 

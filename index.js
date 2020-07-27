@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-var deck = require('././js/GameJS/Cards/Deck');
+var deck = require('././js/UI/Cards/Deck');
 var http = require('http');
 var express = require('express');
 var app = express();

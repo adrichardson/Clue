@@ -1,14 +1,20 @@
-dynamicallyLoadScript("js/GameJS/Cards/Card.js");
-dynamicallyLoadScript("js/GameJS/Cards/PersonCard.js");
-dynamicallyLoadScript("js/GameJS/Cards/RoomCard.js");
-dynamicallyLoadScript("js/GameJS/Cards/WeaponCard.js");
-dynamicallyLoadScript("js/GameJS/Cards/TitleCard.js");
-dynamicallyLoadScript("js/GameJS/Cards/Deck.js");
-dynamicallyLoadScript("js/GameJS/Character.js");
-dynamicallyLoadScript("js/GameJS/Board.js");
-dynamicallyLoadScript("js/UserInput.js");
+dynamicallyLoadScript("js/UI/Cards/Card.js");
+dynamicallyLoadScript("js/UI/Cards/PersonCard.js");
+dynamicallyLoadScript("js/UI/Cards/RoomCard.js");
+dynamicallyLoadScript("js/UI/Cards/WeaponCard.js");
+dynamicallyLoadScript("js/UI/Cards/TitleCard.js");
+dynamicallyLoadScript("js/UI/Cards/Deck.js");
+dynamicallyLoadScript("js/UI/Piece.js");
+dynamicallyLoadScript("js/UI/Board.js");
+dynamicallyLoadScript("js/Managers/SoundManager.js");
+dynamicallyLoadScript("js/Managers/ImageManager.js");
+dynamicallyLoadScript("js/Managers/EventManager.js");
+dynamicallyLoadScript("js/Managers/UserInput.js");
 dynamicallyLoadScript("js/Player.js");
-dynamicallyLoadScript("js/onload.js");
+dynamicallyLoadScript("js/UI/Screens/SplashScreen.js");
+dynamicallyLoadScript("js/Managers/GameManager.js");
+//dynamicallyLoadScript("js/onload.js");
+dynamicallyLoadScript("js/onload_oop.js");
 dynamicallyLoadScript("js/client.js");
 
 

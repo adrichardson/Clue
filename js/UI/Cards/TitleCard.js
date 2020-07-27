@@ -8,7 +8,7 @@ class TitleCard extends Card{
         this.y = y;
         this.name = name;
         this.canSelect = enabled;
-        this.on("mousedown", function(evt) {this.onMouseDown(evt)});
+        this.on("mousedown", function(evt) {this.OnMouseDown()});
     }
 
     SetGrayScale(){
@@ -23,14 +23,16 @@ class TitleCard extends Card{
         this.cursor = style;
     }
 
-    OnMouseDown(evt){
-        if(!this.canSelect || selectedCharacter.name!='Spectator')
-            return;
-        if(stage.getChildByName('confirmBox')!=null){
-          showConfirm(this, stage.getChildByName('confirmBox'));
-        } else {
-          showConfirm(this, null);
-        }
+    OnMouseDown() {
+        //console.log(this.name + " clicked!");
+        document.dispatchEvent(new CustomEvent('title_card_clicked', { 'detail': this.name }));
+        //if(!this.canSelect || selectedCharacter.name!='Spectator')
+        //    return;
+        //if(stage.getChildByName('confirmBox')!=null){
+        //  showConfirm(this, stage.getChildByName('confirmBox'));
+        //} else {
+        //  showConfirm(this, null);
+        //}
     }
 
     Disable(){
