@@ -1,5 +1,4 @@
 /*jshint esversion: 6 */
-var deck = require('././js/UI/Cards/Deck');
 var http = require('http');
 var express = require('express');
 var app = express();
@@ -72,6 +71,11 @@ var needsShown = null;
 var allPass = true;
 var turn = 0;
 var votestart = 0;
+var deck = require('././js/Client/UI/Cards/Deck');
+var Game = require('././js/Server/Game.js');
+var Lobby = require('././js/Server/Lobby.js');
+
+var lobby = new Lobby();
 
 function dealHands(deck){
   var numplayers = players.length;
@@ -130,7 +134,6 @@ function createMurder(deck){
   //console.log(solution);
 }
 
-
 sio.sockets.on('connection', function (client) {
     /*
       all user emit: sio.sockets.emit
@@ -147,6 +150,8 @@ sio.sockets.on('connection', function (client) {
     //  host = client;
   //  }
 
+    var game = new Game(null, client.userid);
+
     client.emit('onconnected', { id: client.userid, usercount: connectedCount});
     //console.log('\t socket.io:: player ' + client.userid + ' connected');
     client.on('disconnect', function () {
@@ -156,6 +161,20 @@ sio.sockets.on('connection', function (client) {
         //console.log('Current connections: ' + connectedCount);
         sio.sockets.emit('sendServerMessage', '<i><b>'+ client.username + '</b> has left the game.</i>');
     });
+
+    client.on('login_attempt', function (data) {
+        var username = data.username;
+        var password = data.password;
+
+        if (username == 'admin' && password == 'admin') {
+            client.emit('loginsuccess');
+        } else {
+            var msg = '[' + username + '] is not a valid login, or the password is incorrect.';
+            client.emit('loginfailure', { message: msg });
+        }
+
+    });
+
     client.on('newmsg', function (data) {
         sio.sockets.emit('newmsg', data);
     });
@@ -223,7 +242,7 @@ sio.sockets.on('connection', function (client) {
     });
     client.on('newuserconnect', function (data) {
         client.username = data.username;
-        client.broadcast.emit('sendServerMessage', '<i><b>'+ data.username + '</b> has joined the game.</i>');
+        client.broadcast.emit('sendServerMessage', '<i><b>' + data.username + '</b> has joined the game.</i>');
     });
     client.on('showCard', function (data) {
         needsShown.emit('showCard', data);

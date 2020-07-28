@@ -1,5 +1,0 @@
-class ChatManager(){
-    constructor(){
-
-    }
-}

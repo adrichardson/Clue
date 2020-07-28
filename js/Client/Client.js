@@ -15,6 +15,20 @@ socket.on('newmsg', function(data) {
   }
 });
 
+socket.on('loginsuccess', function () {
+    console.log("successful login");
+    document.dispatchEvent(new Event('login_success'));
+});
+
+socket.on('loginfailure', function (data) {
+    //$('#errormsg').html('Please enter a valid user name!');
+    //$('#errormsg').removeClass('hidden');
+    errmsg.innerText = data.message;
+    errmsg.classList.remove('hidden');
+});
+
+
+
 socket.on('infomsg', function(data) {
   var pane = $('#chatpane');
   pane.html($('#chatpane').html() + '<br><span style=\'color:' + data.color + '\'<b><i>'+ data.character + ' (' + data.username + ')' +  data.msg + '</i></b></span>');

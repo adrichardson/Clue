@@ -74,7 +74,7 @@ class GameManager {
         $('#canvas').addClass('white');
         $('#chatwrap').addClass('white');
         $('#wrapper').removeClass('hidden');
-        $('#userbox').addClass('hidden');
+        $('#loginbox').addClass('hidden');
 
         //start button
         //if(isHost){

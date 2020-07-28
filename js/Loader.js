@@ -1,21 +1,24 @@
-dynamicallyLoadScript("js/UI/Cards/Card.js");
-dynamicallyLoadScript("js/UI/Cards/PersonCard.js");
-dynamicallyLoadScript("js/UI/Cards/RoomCard.js");
-dynamicallyLoadScript("js/UI/Cards/WeaponCard.js");
-dynamicallyLoadScript("js/UI/Cards/TitleCard.js");
-dynamicallyLoadScript("js/UI/Cards/Deck.js");
-dynamicallyLoadScript("js/UI/Piece.js");
-dynamicallyLoadScript("js/UI/Board.js");
-dynamicallyLoadScript("js/Managers/SoundManager.js");
-dynamicallyLoadScript("js/Managers/ImageManager.js");
-dynamicallyLoadScript("js/Managers/EventManager.js");
-dynamicallyLoadScript("js/Managers/UserInput.js");
-dynamicallyLoadScript("js/Player.js");
-dynamicallyLoadScript("js/UI/Screens/SplashScreen.js");
-dynamicallyLoadScript("js/Managers/GameManager.js");
+dynamicallyLoadScript("js/Client/UI/Cards/Card.js");
+dynamicallyLoadScript("js/Client/UI/Cards/PersonCard.js");
+dynamicallyLoadScript("js/Client/UI/Cards/RoomCard.js");
+dynamicallyLoadScript("js/Client/UI/Cards/WeaponCard.js");
+dynamicallyLoadScript("js/Client/UI/Cards/TitleCard.js");
+dynamicallyLoadScript("js/Client/UI/Cards/Deck.js");
+dynamicallyLoadScript("js/Client/UI/Piece.js");
+dynamicallyLoadScript("js/Client/UI/Board.js");
+dynamicallyLoadScript("js/Client/Managers/SoundManager.js");
+dynamicallyLoadScript("js/Client/Managers/ChatManager.js");
+dynamicallyLoadScript("js/Client/Managers/ImageManager.js");
+dynamicallyLoadScript("js/Client/Managers/EventManager.js");
+dynamicallyLoadScript("js/Client/Managers/UserInput.js");
+dynamicallyLoadScript("js/Client/Player.js");
+dynamicallyLoadScript("js/Client/UI/Screens/SplashScreen.js");
+dynamicallyLoadScript("js/Client/UI/Screens/LobbyScreen.js");
+dynamicallyLoadScript("js/Client/Managers/GameManager.js");
 //dynamicallyLoadScript("js/onload.js");
+dynamicallyLoadScript("js/Client/ClientSession.js");
 dynamicallyLoadScript("js/onload_oop.js");
-dynamicallyLoadScript("js/client.js");
+dynamicallyLoadScript("js/Client/Client_oop.js");
 
 
 function dynamicallyLoadScript(url) {
