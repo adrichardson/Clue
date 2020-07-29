@@ -9,7 +9,7 @@ module.exports = class Game {
     AddClient(client) {
         return new Promise((resolve, reject) => {
             if (this.clientIds.indexOf(client.userid) > -1) {
-                reject("User already joined!");
+                reject("You already joined!");
             }
             else if (this.clientIds.length < 6) {
                 this.clientIds.push(client.userid);

@@ -1,3 +1,5 @@
+var Error = require('././Error.js');
+
 module.exports = function (sio, client) {
 
     client.emit('onconnected', { id: client.userid });
@@ -52,7 +54,8 @@ module.exports = function (sio, client) {
             sio.sockets.emit('update_games_list', sio.lobby.games);
         }
         catch (error) {
-            console.log(error);
+            console.log(errmsg);
+            Error.SendClientError(client, errmsg);
         }
     });
 

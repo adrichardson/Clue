@@ -1,4 +1,5 @@
 var Game = require('././Game.js');
+var Error = require('././Error.js');
 
 module.exports = class Lobby {
     constructor() {
@@ -40,10 +41,10 @@ module.exports = class Lobby {
                     var success = await game.AddClient(client);
                     resolve("Joined game: " + success);
                 }
-                reject("Unable to find game.");
+                reject("Unable to find game error.");
             }
             catch (error) {
-                reject("Unable to join game: " + error);
+                reject("Unable to join game error: " + error);
             }
         });
     }

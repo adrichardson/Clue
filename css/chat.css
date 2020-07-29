@@ -94,6 +94,7 @@ html, body { width:100%; height:100%;   background: #212121;  color: #fff;} /* j
 #gametable{
     color: black;
     width: 100%;
+    border: 1px solid black;
 }
 
 .loginbtn {

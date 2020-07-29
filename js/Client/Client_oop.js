@@ -28,6 +28,10 @@ socket.on('newgame_created', function () {
     window.csession.lobbyscreen.RefreshGamesList();
 });
 
+socket.on('error', function (err) {
+    window.alert(err.errmessage);
+});
+
 socket.on('update_games_list', function (data) {
     console.log("updating games list...");
     window.csession.lobbyscreen.SetGameList(data);
