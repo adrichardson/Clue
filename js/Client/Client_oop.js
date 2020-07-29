@@ -1,8 +1,3 @@
-socket.on('onconnected', function (data) {
-    socket.ssid = data.id;
-    console.log('Connected successfully to the socket.io server. Server side ID is ' + data.id);
-});
-
 socket.on('loginsuccess', function (data) {
     $('#chatpane').html('Welcome to Online Clue! <hr>');
     socket.sessobj = data;
@@ -20,8 +15,22 @@ socket.on('return_games_list', function (data) {
     window.csession.lobbyscreen.SetGameList(data);
 });
 
+socket.on('joined_game', function (data) {
+    console.log("joining game: " + data);
+});
+
+socket.on('deleted_game', function (data) {
+    console.log("[" + data.deleted_id + "] was deleted refreshing games list...");
+    window.csession.lobbyscreen.SetGameList(data.remaining_list);
+});
+
 socket.on('newgame_created', function () {
-    window.csession.lobbyscreen.GetAvailableGamesList();
+    window.csession.lobbyscreen.RefreshGamesList();
+});
+
+socket.on('update_games_list', function (data) {
+    console.log("updating games list...");
+    window.csession.lobbyscreen.SetGameList(data);
 });
 
 socket.on('newmsg', function (data) {

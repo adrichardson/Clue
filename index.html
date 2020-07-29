@@ -9,16 +9,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
     <!-- Notice the URL, this is handled by socket.io on the server automatically, via express -->
-    <script type="text/javascript" src="/js/Loader.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-    <script>
-        var socket = io.connect('/', {
-            reconnection: true,
-            reconnectionDelay: 5000,
-            reconnectionDelayMax: 5000,
-            reconnectionAttempts: 10
-        });
-    </script>
+    <script type="text/javascript" src="/js/Loader.js"></script>
 </head>
 
 <body>

@@ -1,5 +1,6 @@
 class ClientSession {
-    constructor (){
+    constructor() {
+        this.ssid = socket.ssid;
         this.Initialize();
     }
 

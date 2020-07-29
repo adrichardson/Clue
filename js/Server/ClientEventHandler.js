@@ -1,5 +1,3 @@
-var Game = require('././Game.js');
-
 module.exports = function (sio, client) {
 
     client.emit('onconnected', { id: client.userid });
@@ -34,9 +32,38 @@ module.exports = function (sio, client) {
         client.emit('return_games_list', sio.lobby.GetGameList());
     });
 
-    client.on('creategame', function (data) {
-        var game = new Game(data + "'s game", client.userid);
-        sio.lobby.AddGame(game);
-        sio.sockets.emit('newgame_created');
+    client.on('creategame', async function (data) {
+        //var game = new Game(data + "'s game", client.userid);
+        try {
+            var created = await sio.lobby.AddGame(data, client.userid);
+            console.log(created);
+            sio.sockets.emit('newgame_created');
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+
+    client.on('join_game', async function (data) {
+        try {
+            var connect = await sio.lobby.ConnectToGame(data.id, client);
+            console.log(connect);
+            client.emit('joined_game', data.id);
+            sio.sockets.emit('update_games_list', sio.lobby.games);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+
+    client.on('delete_game', async function (data) {
+        try {
+            await sio.lobby.DeleteGame(data.id);
+            sio.sockets.emit('deleted_game', { deleted_id: data.id, remaining_list: sio.lobby.GetGameList() });
+        }
+        catch (error) {
+            console.log(error);
+        }
+
     });
 };

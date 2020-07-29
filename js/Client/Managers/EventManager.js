@@ -40,6 +40,18 @@ class EventManager {
         $(document).on('click', '#newgamebtn', function (e) {
             socket.emit('creategame', socket.sessobj.name);
         });
+
+        $(document).on('click', '#joingamebtn', function (e) {
+            console.log(e.target);
+            console.log(e.target.gameID);
+            socket.emit('join_game', { id: e.target.gameID});
+        });
+
+        $(document).on('click', '#deletegamebtn', function (e) {
+            console.log(e.target);
+            console.log(e.target.gameID);
+            socket.emit('delete_game', { id: e.target.gameID });
+        });
     }
 
     //handle this instance of game manager events

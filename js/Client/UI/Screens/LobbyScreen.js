@@ -29,23 +29,25 @@ class LobbyScreen {
         createbtn.className = "loginbtn";
         createbtn.textContent = "Create";
 
-        var joinbtn = document.createElement("button");
-        joinbtn.id = "joinbtn";
-        joinbtn.className = "loginbtn";
-        joinbtn.textContent = "Join";
+        //var joinbtn = document.createElement("button");
+        //joinbtn.id = "joinbtn";
+        //joinbtn.className = "loginbtn";
+        //joinbtn.textContent = "Join";
 
         var gametable = document.createElement("table");
         gametable.id = "gametable";
+        var body = gametable.createTBody();
+        body.id = "gametablebody";
 
         gamelistbox.append(gameboxtitle);
         gamelistbox.append(gametable);
-        gamelistbox.append(joinbtn);
+        //gamelistbox.append(joinbtn);
         gamelistbox.append(createbtn);
 
-        this.GetAvailableGamesList();
+        this.RefreshGamesList();
     }
 
-    GetAvailableGamesList() {
+    RefreshGamesList() {
         console.log("searching for games...");
         socket.emit('get_games_list');
     }
@@ -57,11 +59,35 @@ class LobbyScreen {
 
     Refresh() {
         console.log(this.gameslist);
+        var tablebody = $('#gametablebody');
+        tablebody.empty();
+
         for (var i = 0; i < this.gameslist.length; i++) {
             var newRow = gametable.insertRow();
+            newRow.gameID = this.gameslist[i].ID;
             var newCell = newRow.insertCell(0);
             var title = document.createTextNode(this.gameslist[i].title);
             newCell.appendChild(title);
+
+            var playercountCell = newRow.insertCell(1);
+            var count = this.gameslist[i].clientIds.length;
+            console.log(count + " players found");
+            var counttext = document.createTextNode(count + "/6 players");
+            playercountCell.appendChild(counttext);
+
+            var buttoncell = newRow.insertCell(2);
+            var btn = document.createElement("button");
+            btn.gameID = newRow.gameID;
+            btn.className = "loginbtn";
+            if (newRow.gameID == window.csession.ssid) {
+                btn.id = "deletegamebtn";
+                btn.textContent = "Delete";
+            }
+            else {
+                btn.id = "joingamebtn";
+                btn.textContent = "Join";
+            }
+            buttoncell.appendChild(btn);
         }
     }
 }
