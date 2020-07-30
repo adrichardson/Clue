@@ -1,11 +1,11 @@
-var Error = require('././Error.js');
+var ServerError = require('././ServerError.js');
 
-module.exports = function (sio, client) {
+module.exports = (sio, client) => {
 
     client.emit('onconnected', { id: client.userid });
 
-    client.on('disconnect', function () {
-        pos = sio.connectedClients.map(function (e) { return e.uid; }).indexOf(client.userid);
+    client.on('disconnect', () => {
+        pos = sio.connectedClients.map((e) => { return e.uid; }).indexOf(client.userid);
         if (pos >= 0) {
             var disc = sio.connectedClients[pos];
             console.log(disc.name + ' [' + disc.uid +'] has left the server');
@@ -14,7 +14,7 @@ module.exports = function (sio, client) {
         }
     });
 
-    client.on('login_attempt', function (data) {
+    client.on('login_attempt', (data) => {
         var username = data.username;
         var password = data.password;
 
@@ -30,7 +30,7 @@ module.exports = function (sio, client) {
 
     });
 
-    client.on('get_games_list', function () {
+    client.on('get_games_list', () => {
         client.emit('return_games_list', sio.lobby.GetGameList());
     });
 
@@ -46,7 +46,7 @@ module.exports = function (sio, client) {
         }
     });
 
-    client.on('join_game', async function (data) {
+    client.on('join_game', async (data) => {
         try {
             var connect = await sio.lobby.ConnectToGame(data.id, client);
             console.log(connect);
@@ -54,12 +54,12 @@ module.exports = function (sio, client) {
             sio.sockets.emit('update_games_list', sio.lobby.games);
         }
         catch (error) {
-            console.log(errmsg);
-            Error.SendClientError(client, errmsg);
+            console.log(error.message);
+            ServerError.SendClientError(client, error.message);
         }
     });
 
-    client.on('delete_game', async function (data) {
+    client.on('delete_game', async (data) => {
         try {
             await sio.lobby.DeleteGame(data.id);
             sio.sockets.emit('deleted_game', { deleted_id: data.id, remaining_list: sio.lobby.GetGameList() });

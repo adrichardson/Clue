@@ -1,5 +1,4 @@
 var Game = require('././Game.js');
-var Error = require('././Error.js');
 
 module.exports = class Lobby {
     constructor() {
@@ -11,9 +10,9 @@ module.exports = class Lobby {
             if (this.GetGame(clientid) == null) {
                 var game = new Game(title + "'s game", clientid);
                 this.games.push(game);
-                resolve("added game [" + game.GetID() + "]");
+                return resolve("added game [" + game.GetID() + "]");
             } else {
-                reject("Game already exists for user [" + clientid + "]");
+                return reject("Game already exists for user [" + clientid + "]");
             }
         });
     }
@@ -39,12 +38,12 @@ module.exports = class Lobby {
                 var game = this.GetGame(id);
                 if (game != null) {
                     var success = await game.AddClient(client);
-                    resolve("Joined game: " + success);
+                    return resolve("Joined game: " + success);
                 }
-                reject("Unable to find game error.");
+                return reject({ message: "Unable to find game error." });
             }
             catch (error) {
-                reject("Unable to join game error: " + error);
+                return reject({ message: "Unable to join game error: " + error.message });
             }
         });
     }
@@ -54,10 +53,10 @@ module.exports = class Lobby {
             for (var i = 0; i < this.games.length; i++) {
                 if (this.games[i].GetID() == id) {
                     this.games.splice(i, 1);
-                    resolve("Game [" + id + "] deleted!");
+                    return resolve("Game [" + id + "] deleted!");
                 }
             }
-            reject("Unable to delete game ["+ id +"]");
+            return reject("Unable to delete game ["+ id +"]");
         });
     }
 }
