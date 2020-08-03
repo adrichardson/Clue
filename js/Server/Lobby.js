@@ -40,10 +40,10 @@ module.exports = class Lobby {
                     var success = await game.AddClient(client);
                     return resolve("Joined game: " + success);
                 }
-                return reject({ message: "Unable to find game error." });
+                return reject(new Error("Unable to find game error."));
             }
             catch (error) {
-                return reject({ message: "Unable to join game error: " + error.message });
+                return reject(new Error("Unable to join game error: " + error.message));
             }
         });
     }

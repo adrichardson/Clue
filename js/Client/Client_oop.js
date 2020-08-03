@@ -28,9 +28,9 @@ socket.on('newgame_created', () =>{
     window.csession.lobbyscreen.RefreshGamesList();
 });
 
-socket.on('error', (err) => {
-    //window.alert(err.errmessage);
-    console.log(err.errmessage);
+socket.on('myerror', (err) => {
+    window.alert(err);
+    console.log("clientside err:" + err);
 });
 
 socket.on('update_games_list', (data) => {

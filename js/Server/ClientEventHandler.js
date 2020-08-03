@@ -55,7 +55,7 @@ module.exports = (sio, client) => {
         }
         catch (error) {
             console.log(error.message);
-            ServerError.SendClientError(client, error.message);
+            ServerError.SendClientError(client, error.message);      
         }
     });
 

@@ -9,14 +9,14 @@ module.exports = class Game {
     AddClient(client) {
         return new Promise((resolve, reject) => {
             if (this.clientIds.indexOf(client.userid) > -1) {
-                return reject({message: "You already joined!"});
+                return reject(new Error("You already joined!"));
             }
             else if (this.clientIds.length < 6) {
                 this.clientIds.push(client.userid);
                 return resolve("Game now has [" + this.clientIds.length + "/6] users.");
             }
             else {
-                return reject({ message: "Game is full!" });
+                return reject(new Error("Game is full!"));
             }
         });
     }
